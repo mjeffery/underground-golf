@@ -1,3 +1,5 @@
+import Ball from './Ball'
+
 export default class Preload {
 	preload() {
 		const load = this.load,
@@ -10,6 +12,7 @@ export default class Preload {
 		load.setPreloadSprite(this.bar);
 
 		//PRELOAD RESOURCES HERE
+        Ball.preload(load);
 	}
 
 	onLoadComplete() {
