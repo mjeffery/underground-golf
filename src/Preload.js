@@ -1,4 +1,5 @@
 import Ball from './Ball'
+import RubberBand from './RubberBand' 
 
 export default class Preload {
 	preload() {
@@ -13,6 +14,7 @@ export default class Preload {
 
 		//PRELOAD RESOURCES HERE
         Ball.preload(load);
+        RubberBand.preload(load);
 	}
 
 	onLoadComplete() {
