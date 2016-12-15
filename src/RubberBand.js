@@ -10,8 +10,17 @@ export default class RubberBand extends Sprite {
         super(game, x, y, 'red');
         this.leftEnd = new Point();
         this.rightEnd = new Point();
+        this.maxLength = 250;
         
         this.anchor.setTo(1, 0.5);
+    }
+
+    get shotAngle() {
+        return Point.angle(this.rightEnd, this.leftEnd);
+    }
+
+    get length() {
+        return Math.min(this.maxLength, Point.distance(this.leftEnd, this.rightEnd));
     }
 
     think() {
@@ -22,6 +31,6 @@ export default class RubberBand extends Sprite {
         this.y = right.y;
 
         this.rotation = Point.angle(right, left);
-        this.scale.x = Point.distance(left, right) / 2;
+        this.scale.x = this.length / 2;
     }
 }

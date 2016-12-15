@@ -1,14 +1,15 @@
 import { Sprite, Physics } from 'phaser'
 
 export const Constants = {
-    Drag: 300
+    Drag: 150,
+    PowerScale: 500,
+    Bounce: 0.8
 }
 
 export default class Ball extends Sprite {
     
     static preload(load) {
         load.image('ball', 'assets/img/ball.png');
-        load.image('red', 'assets/img/red.png');
     }
 
     constructor(game, x, y) {
@@ -19,5 +20,12 @@ export default class Ball extends Sprite {
         //TODO is this the right physics?  No, it's not...
         game.physics.enable(this, Physics.ARCADE); 
         this.body.drag.setTo(Constants.Drag, Constants.Drag);
+        this.body.collideWorldBounds = true;
+        this.body.bounce.setTo(Constants.Bounce, Constants.Bounce);
+    }
+
+    shoot(angle, power) {
+        let speed = power * Constants.PowerScale;
+        this.game.physics.arcade.velocityFromRotation(angle, speed, this.body.velocity);
     }
 }
