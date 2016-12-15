@@ -14,6 +14,15 @@ export default class Game {
 	}
 
     update() {
-        this.shotManager.think();
+        let shotManager = this.shotManager;
+
+        let ballSpeedSq = this.ball.body.velocity.getMagnitudeSq();
+        if(ballSpeedSq > 0.1) {
+            shotManager.enabled = false;
+        } else {
+            shotManager.enabled = true;
+        }
+
+        shotManager.think();
     }
 }

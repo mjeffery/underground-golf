@@ -19,13 +19,33 @@ export default class ShotManager {
         game.add.existing(this.rubberband);
 
         this.pointerWasDown = false;
+        this._dragging = false;
+        this._enabled = true;
 
         this.events = {
             onShot: new Signal()
         }
     }
 
+    get isDragging() {
+        return this._dragging;
+    }
+
+    get enabled() {
+        return this._enabled;
+    }
+
+    set enabled(value) {
+        if(this.isDragging && this._enabled && !value) {
+            this.endDrag(true);
+        }
+
+        this._enabled = value;
+    }
+
     think() {
+        if(!this.enabled) return; 
+        
         let pointer = this.input.activePointer;
         if(pointer.isDown) {
             const x = pointer.worldX,
@@ -58,6 +78,8 @@ export default class ShotManager {
         rubberband.visible = true;
         rubberband.leftEnd.setTo(x, y);
         rubberband.rightEnd.setTo(x, y);
+
+        this._dragging = true;
     }
 
     dragging(x, y) {
@@ -65,15 +87,19 @@ export default class ShotManager {
         this.rubberband.think();
     }
 
-    endDrag() {
+    endDrag(silent=false) {
         let rubberband = this.rubberband,
             angle = rubberband.shotAngle,
             power =  rubberband.length / rubberband.maxLength;
 
-        this.events.onShot.dispatch(angle, power);
+        if(!silent) {
+            this.events.onShot.dispatch(angle, power);
+        }
 
         this.circle.visible = false;
         rubberband.visible = false;
+
+        this._dragging = false;
     }
 
 }
