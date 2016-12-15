@@ -1,5 +1,6 @@
 import Ball from './Ball'
 import RubberBand from './RubberBand' 
+import ShotManager from './ShotManager'
 
 export default class Preload {
 	preload() {
@@ -15,6 +16,7 @@ export default class Preload {
 		//PRELOAD RESOURCES HERE
         Ball.preload(load);
         RubberBand.preload(load);
+        ShotManager.preload(load);
 	}
 
 	onLoadComplete() {
