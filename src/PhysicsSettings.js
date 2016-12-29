@@ -2,7 +2,7 @@ import { Physics } from 'phaser'
 
 export default class PhysicsSettings {
 
-    PhysicsSettings(game) {
+    constructor(game) {
         this.game = game;
 
         game.physics.startSystem(Physics.P2JS);

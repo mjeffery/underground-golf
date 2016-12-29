@@ -17,11 +17,11 @@ export default class Ball extends Sprite {
 
         this.anchor.setTo(0.5, 0.5);
        
-        //TODO is this the right physics?  No, it's not...
-        game.physics.enable(this, Physics.P2JS);
+        game.physics.p2.enable(this);
         this.body.setMaterial(p2settings.materials.ball);
         this.body.damping = Constants.Damping;
         this.body.collideWorldBounds = true;
+        this.body.fixedRotation = true;
 
         const { balls, world } = p2settings.collisionGroups;
         this.body.setCollisionGroup(balls);
@@ -29,7 +29,10 @@ export default class Ball extends Sprite {
     }
 
     shoot(angle, power) {
-        let speed = power * Constants.PowerScale;
-        this.game.physics.arcade.velocityFromRotation(angle, speed, this.body.velocity);
+        let speed = power * Constants.PowerScale,
+            x = Math.cos(angle) * speed,
+            y = Math.sin(angle) * speed;
+
+        this.body.applyImpulseLocal([x, y], 0, 0); //TODO this array left to GC is alittle sad?
     }
 }

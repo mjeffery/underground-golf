@@ -16,7 +16,7 @@ export default class RubberBand extends Sprite {
     }
 
     get shotAngle() {
-        return Point.angle(this.rightEnd, this.leftEnd);
+        return Point.angle(this.leftEnd, this.rightEnd);
     }
 
     get length() {
