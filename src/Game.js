@@ -1,16 +1,17 @@
 import Ball from './Ball'
 import Box from './Box'
+import PhysicsSettings from './PhysicsSettings'
 import ShotManager from './ShotManager'
 import { Keyboard, Physics } from 'phaser'
 
 export default class Game {
 	
 	create() {
-        this.game.physics.startSystem(Physics.P2JS);
-        this.collidableGroup = this.game.physics.p2.createCollisionGroup();
 		this.stage.backgroundColor = '#6595ED';
         
-        const ball = this.ball = new Ball(this.game, 400,300, this.collidableGroup);
+        this.settings = new PhysicsSettings(this.game);
+        
+        const ball = this.ball = new Ball(this.game, 400,300, this.settings);
         this.add.existing(ball);
 
         this.shotManager = new ShotManager(this.game);
