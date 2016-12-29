@@ -6,16 +6,14 @@ export default class Box extends Sprite {
         load.image('box', 'assets/img/box.png');
     }
 
-    constructor(game, movableGroup) {
+    constructor(game, x, y, p2settings) {
         super(game, game.centerX, game.centerY, 'box');
-
+        this.p2settings = p2settings;
         this.isMovable = true;
 
-        this.body.setCollisionGroup(movableGroup);
-
         this.anchor.setTo(0.5, 0.5);
-        movableGroup.add(this);
-        game.physics.enable(this, Physics.P2);
+        //this.body.static = true;
+        
     }
 
     move() {
@@ -32,8 +30,14 @@ export default class Box extends Sprite {
 
         if(this.game.input.activePointer.leftButton.isDown) {
             this.isMovable = false;
-            this.game.physics.arcade.enable(this);
+            this.game.physics.enable(this, Physics.P2JS);
+            const { balls, world } = this.p2settings.collisionGroups;
+            this.body.setCollisionGroup(world);
+            this.body.collides([balls, world]);
+            this.body.allowGravity = false;
+            this.body.gravity = 0;
             this.body.immovable = true;
+            this.body.static = true;
         }
     }
 }
