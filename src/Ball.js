@@ -1,8 +1,9 @@
 import { Sprite, Physics } from 'phaser'
 
 export const Constants = {
-    Damping: 0.9,
-    PowerScale: 500,
+    Damping: 0.95,
+    MinPower: 10,
+    MaxPower: 300,
     Bounce: 0.8
 }
 
@@ -16,8 +17,10 @@ export default class Ball extends Sprite {
         super(game, x, y, 'ball');
 
         this.anchor.setTo(0.5, 0.5);
+        this.scale.setTo(0.25, 0.25);
        
         game.physics.p2.enable(this);
+        this.body.setCircle(8);
         this.body.setMaterial(p2settings.materials.ball);
         this.body.damping = Constants.Damping;
         this.body.collideWorldBounds = true;
@@ -29,7 +32,7 @@ export default class Ball extends Sprite {
     }
 
     shoot(angle, power) {
-        let speed = power * Constants.PowerScale,
+        let speed = this.game.math.linear(Constants.MinPower, Constants.MaxPower, power),
             x = Math.cos(angle) * speed,
             y = Math.sin(angle) * speed;
 
