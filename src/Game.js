@@ -28,7 +28,8 @@ export default class Game {
     update() {
         let shotManager = this.shotManager;
 
-        let ballSpeedSq = this.ball.body.velocity.getMagnitudeSq();
+        let velocity = this.ball.body.velocity;
+        let ballSpeedSq = (velocity.x * velocity.x) + (velocity.y * velocity.y);
 
         shotManager.enabled = !(ballSpeedSq > 0.1);
 
