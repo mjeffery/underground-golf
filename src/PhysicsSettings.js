@@ -10,9 +10,14 @@ export default class PhysicsSettings {
         const p2 = game.physics.p2;
         const materials = {
             ball: p2.createMaterial('ball'),
-            worldBounds: p2.createMaterial('worldBounds')
+            worldBounds: p2.createMaterial('worldBounds'),
+            ballAndHole: p2.createMaterial('ballAndHole')
         };
-        
+        materials.ballAndHole.stiffness = 10;
+        materials.ballAndHole.friction = .5;
+        materials.ballAndHole.surfaceVelocity = 10;
+        materials.ballAndHole.restitution = .2;
+
         p2.setWorldMaterial(materials.worldBounds);
 
         const contactMaterials = {

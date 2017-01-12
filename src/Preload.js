@@ -1,4 +1,5 @@
 import Ball from './Ball'
+import Hole from './Hole'
 import Box from './Box'
 import RubberBand from './RubberBand' 
 import ShotManager from './ShotManager'
@@ -15,6 +16,7 @@ export default class Preload {
 		load.setPreloadSprite(this.bar);
 
 		//PRELOAD RESOURCES HERE
+		Hole.preload(load);
         Ball.preload(load);
 		Box.preload(load);
         RubberBand.preload(load);
