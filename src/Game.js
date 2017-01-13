@@ -5,6 +5,19 @@ import PhysicsSettings from './PhysicsSettings'
 import ShotManager from './ShotManager'
 import Keyboard from 'phaser'
 
+function hitHole(body1, body2) {
+    body1.velocity = {x: 0, y:0};
+    body2.velocity = {x: 0, y:0};
+    body1.static = true;
+    body2.static = true;
+    body1.immovable = true;
+    body2.immovable = true;
+    body2.motionState = 0;
+    body1.reset(100,100);
+    body2.reset(100,100);
+    console.log("hit");
+}
+
 export default class Game {
 	
 	create() {
@@ -17,6 +30,8 @@ export default class Game {
         const hole = this.hole = new Hole(this.game, 100, 100, this.settings);
         this.add.existing(hole);
         this.add.existing(ball);
+
+        this.ball.body.createBodyCallback(hole, hitHole, this);
 
         this.shotManager = new ShotManager(this.game);
         this.shotManager.events.onShot.add(ball.shoot, ball);
